@@ -33,10 +33,7 @@ public:
 
 	~TVector()
 	{
-		if (Ptr!= nullptr)
-		{
 			delete[] Ptr;
-		}
 	}
 
 	bool empty() const throw()
@@ -80,7 +77,7 @@ public:
 
 	TVector(const TVector& rhs)
 	{
-		Ptr = new value_type[rhs.InternalCapacity];
+		reserve (rhs.InternalCapacity);
 		InternalCapacity = rhs.InternalCapacity;
 		Count = rhs.Count;
 		memcpy(Ptr, rhs.Ptr, InternalCapacity*sizeof(size_type));
@@ -160,9 +157,9 @@ public:
 
 	void clear()
 	{
+		delete[] Ptr;
 		Count = 0;
 		InternalCapacity = 0;
-		delete[] Ptr;
 	}
 
 	void pop_back()
@@ -178,6 +175,10 @@ public:
 	}
 	void resize(size_type count, value_type value = value_type())
 	{
+		if (count > INT_MAX)
+		{
+			throw std::exception();
+		}
 		if (count > Count)
 		{	
 			reserve(count);
