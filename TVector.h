@@ -1,6 +1,10 @@
 #ifndef __TVECTOR_INCLUDED__
 #define __TVECTOR_INCLUDED__
 #include "iostream"
+
+class out_of_range : public std::exception
+{
+};
 class TVector
 {
 public:
@@ -110,7 +114,7 @@ public:
 	{
 		if (index > InternalCapacity||index < 0)
 		{
-			throw std::exception();
+			throw out_of_range();
 		}
 		return Ptr[index];
 	}
@@ -119,7 +123,7 @@ public:
 	{
 		if (index > InternalCapacity || index < 0)
 		{
-			throw std::exception();
+			throw out_of_range();
 		}
 		return Ptr[index];
 	}
@@ -190,7 +194,7 @@ public:
 		int position = *pos;
 		if (position > Count)
 		{
-			throw std::exception();
+			throw out_of_range();
 		}
 		Count++;
 		reserve(Count);
@@ -207,7 +211,7 @@ public:
 		int position = *pos;
 		if (position > Count)
 		{
-			throw std::exception();
+			throw out_of_range();
 		}
 		Count+=count;
 		reserve(Count);
@@ -225,7 +229,7 @@ public:
 	{
 		if (pos > Ptr + Count)
 		{
-			throw std::exception();
+			throw out_of_range();
 		}
 		for (int i = 0; i + pos < Ptr + Count; ++i)
 		{
@@ -240,7 +244,7 @@ public:
 	{
 		if (last > Ptr + Count || first >= Ptr + Count)
 		{
-			throw std::exception();
+			throw out_of_range();
 		}
 		for (int i = 0; i + last < Ptr + Count; ++i)
 		{
