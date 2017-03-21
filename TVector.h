@@ -193,13 +193,13 @@ public:
 	iterator insert(iterator pos, const value_type& value)
 	{
 		int position = *pos;
-		if (position > Count)
+		if (pos > Ptr + Count)
 		{
 			throw out_of_range();
 		}
 		Count++;
 		reserve(Count);
-		for (int i = Count - 1 ; i >= position; i--)
+		for (int i = Count - 1 ; i >= position; --i)
 		{
 			Ptr[i] = Ptr[i - 1];
 		}
@@ -210,13 +210,13 @@ public:
 	void insert(iterator pos, size_type count, const value_type& value)
 	{
 		int position = *pos;
-		if (position > Count)
+		if (pos > Ptr + Count)
 		{
 			throw out_of_range();
 		}
 		Count+=count;
 		reserve(Count);
-		for (int i = Count - 1; i >= position+count; i--)
+		for (int i = Count - 1; i >= position+count; --i)
 		{
 			Ptr[i] = Ptr[i - count];
 		}
